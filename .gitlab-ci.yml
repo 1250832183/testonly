@@ -1,0 +1,66 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "18.18.0"
+
+# Build Job
+build:
+  stage: build
+  image: node:${NODE_VERSION}
+  cache:
+    paths:
+      - node_modules/
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+      - node_modules/
+      - public/
+    expire_in: 1 hour
+  only:
+    - main
+    - develop
+
+# Deploy to Production
+deploy_production:
+  stage: deploy
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq openssh-client rsync
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts
+  script:
+    - chmod +x ./scripts/deploy.sh
+    - ./scripts/deploy.sh production
+  environment:
+    name: production
+    url: https://turnitin.yourdomain.com
+  only:
+    - main
+
+# Deploy to Staging
+deploy_staging:
+  stage: deploy
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq openssh-client rsync
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $DEPLOY_HOST_STAGING >> ~/.ssh/known_hosts
+  script:
+    - chmod +x ./scripts/deploy.sh
+    - ./scripts/deploy.sh staging
+  environment:
+    name: staging
+    url: https://staging-turnitin.yourdomain.com
+  only:
+    - develop

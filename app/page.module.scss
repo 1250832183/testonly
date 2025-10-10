@@ -1,0 +1,511 @@
+@import '@/styles/library.scss';
+
+.turnitinChecker {
+  min-height: calc(100vh - 72px);
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  color: #1e3a8a;
+  padding: 60px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 40px;
+    }
+  }
+
+  .leftSection {
+    flex: 0 1 40%;
+
+    .title {
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 24px 0;
+      color: #1e3a8a;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+      @media (max-width: 768px) {
+        font-size: 36px;
+      }
+    }
+
+    .description {
+      color: #3b82f6;
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      margin: 0 0 32px 0;
+      line-height: 140%;
+
+      @media (max-width: 1024px) {
+        max-width: none;
+      }
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        color: #64748b;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%;
+        margin-bottom: 16px;
+        position: relative;
+        padding-left: 28px;
+
+        &::before {
+          content: '✓';
+          position: absolute;
+          left: 0;
+          color: #3b82f6;
+          font-size: 20px;
+          font-weight: 700;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .rightSection {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1 0 55%;
+
+    border-radius: 24px;
+    background: white;
+    padding: 24px;
+    box-shadow: 0 10px 40px rgba(30, 58, 138, 0.1);
+
+    .inputArea {
+      position: relative;
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 20px;
+      min-height: 350px;
+      overflow: hidden;
+      background: #f8fafc;
+
+      .textInput {
+        width: 100%;
+        height: 300px;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #1e293b;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.6;
+        resize: none;
+        @include scrollBar();
+
+        &::placeholder {
+          color: #94a3b8;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .charCount {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        color: #94a3b8;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 8px;
+        background: white;
+      }
+
+      .fileDisplay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-height: 350px;
+        gap: 20px;
+
+        .fileIcon {
+          .pdfIcon {
+            width: 64px;
+            height: 64px;
+          }
+        }
+
+        .fileName {
+          color: #1e293b;
+          text-align: center;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 18px;
+          font-weight: 600;
+          text-align: center;
+          word-break: break-word;
+        }
+
+        .uploadStatus {
+          color: #64748b;
+          text-align: center;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-size: 14px;
+          font-weight: 400;
+        }
+
+        .progressBar {
+          width: 240px;
+          height: 8px;
+          background: #e2e8f0;
+          border-radius: 4px;
+          overflow: hidden;
+
+          .progressFill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+          }
+        }
+
+        .deleteButton {
+          min-width: 160px;
+          background: #ef4444;
+          border: none;
+          border-radius: 12px;
+          padding: 14px 32px;
+          color: white;
+          text-align: center;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+          }
+        }
+      }
+
+      .detectionDisplay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-height: 350px;
+        gap: 20px;
+
+        .detectionStatus {
+          color: #1e3a8a;
+          text-align: center;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+
+        .detectionMessage {
+          max-width: 450px;
+          color: #64748b;
+          text-align: center;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          margin-bottom: 16px;
+        }
+
+        .detectionComplete {
+          color: #10b981;
+          text-align: center;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 28px;
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+
+        .animationContainer {
+          margin: 20px 0;
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .detectionButtons {
+          display: flex;
+          gap: 16px;
+          justify-content: center;
+          margin-top: 20px;
+
+          .resetButton {
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 14px 40px;
+            color: #3b82f6;
+            text-align: center;
+            font-family: 'Rethink Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+              background: #eff6ff;
+              transform: translateY(-2px);
+            }
+          }
+
+          .downloadButton {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 14px 32px;
+            color: white;
+            text-align: center;
+            font-family: 'Rethink Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            }
+
+            .downloadIcon {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    .actionButtons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .buttonGroup {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex: 1;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
+      }
+
+      .checksButton {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 28px;
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        border-radius: 16px;
+        border: 2px solid #bfdbfe;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-color: #93c5fd;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .checksNumber {
+          color: #2563eb;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 28px;
+          font-weight: 700;
+          line-height: 1;
+        }
+
+        .checksText {
+          color: #64748b;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 1;
+        }
+      }
+
+      .uploadButton {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        border-radius: 12px;
+        border: 2px solid #3b82f6;
+        background: white;
+        color: #3b82f6;
+        text-align: center;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        white-space: nowrap;
+
+        &:hover:not(.disabled) {
+          background: #eff6ff;
+          transform: translateY(-2px);
+        }
+
+        &.disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .uploadIcon {
+          width: 20px;
+          height: 20px;
+          object-fit: contain;
+        }
+      }
+
+      .detectButton {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 16px 48px;
+        flex: 1;
+
+        color: white;
+        text-align: center;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        white-space: nowrap;
+
+        &:hover:not(.disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        &.disabled {
+          background: #94a3b8;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+// Complete animation styles
+.completeAnimation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .turnitinChecker {
+    padding: 40px 20px;
+
+    .leftSection {
+      text-align: center;
+
+      .title {
+        font-size: 32px;
+      }
+
+      .description {
+        font-size: 18px;
+      }
+
+      .features {
+        text-align: left;
+
+        li {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .rightSection {
+      .inputArea {
+        min-height: 300px;
+
+        .textInput {
+          height: 250px;
+          font-size: 14px;
+        }
+      }
+
+      .actionButtons {
+        .checksButton {
+          padding: 12px 20px;
+
+          .checksNumber {
+            font-size: 24px;
+          }
+
+          .checksText {
+            font-size: 14px;
+          }
+        }
+
+        .uploadButton {
+          padding: 14px 24px;
+          font-size: 14px;
+        }
+
+        .detectButton {
+          padding: 14px 32px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+

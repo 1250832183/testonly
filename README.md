@@ -1,0 +1,229 @@
+# Turnitin Checker
+
+A modern web application for checking document similarity using official Turnitin integration. Built with Next.js 14 App Router, React, TypeScript, and Supabase Auth.
+
+## Features
+
+- 🔍 **Official Turnitin Integration** - Direct connection to Turnitin servers
+- 🔐 **Secure Authentication** - Google and Email login via Supabase
+- 📄 **Multiple Input Methods** - Support for text input and file upload (PDF, DOC, DOCX)
+- 📊 **Real-time Detection** - Live progress tracking and status updates
+- 📥 **Download Reports** - Get detailed similarity reports
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile
+- 🎨 **Modern UI** - Clean blue-white theme with smooth animations
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: SCSS + Tailwind CSS
+- **State Management**: MobX
+- **Authentication**: Supabase Auth
+- **HTTP Client**: Axios
+- **UI Components**: Ant Design
+- **Animations**: Lottie Web
+- **Deployment**: GitLab CI/CD + PM2
+
+## Prerequisites
+
+- Node.js 18.18.0 or higher
+- npm or yarn
+- Supabase account
+- GitLab account (for CI/CD)
+
+## Getting Started
+
+### 1. Clone the repository
+
+\`\`\`bash
+git clone <repository-url>
+cd turnitin-checker
+\`\`\`
+
+### 2. Install dependencies
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### 3. Set up environment variables
+
+Create a \`.env.local\` file in the root directory:
+
+\`\`\`env
+
+# API Configuration
+
+NEXT_PUBLIC_PREFIX=https://api.answer-ai.com
+NEXT_PUBLIC_API_BASE_URL=https://api.answer-ai.com/api/v1
+
+# Supabase Configuration
+
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+\`\`\`
+
+### 4. Run the development server
+
+\`\`\`bash
+npm run dev
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+## Supabase Setup
+
+### 1. Create a Supabase Project
+
+1. Go to [Supabase](https://supabase.com/)
+2. Create a new project
+3. Get your project URL and anon key from Settings > API
+
+### 2. Configure Authentication Providers
+
+#### Google OAuth
+
+1. Go to Authentication > Providers in Supabase dashboard
+2. Enable Google provider
+3. Add your Google OAuth credentials
+4. Add authorized redirect URLs:
+   - Development: \`http://localhost:3000/auth/callback\`
+   - Production: \`https://yourdomain.com/auth/callback\`
+
+#### Email Authentication
+
+1. Enable Email provider in Supabase dashboard
+2. Configure email templates if needed
+
+## Project Structure
+
+\`\`\`
+turnitin-checker/
+├── app/ # Next.js App Router pages
+│ ├── auth/ # Authentication callbacks
+│ ├── my-tasks/ # My Tasks page
+│ ├── layout.tsx # Root layout
+│ ├── page.tsx # Home page (Upload)
+│ └── globals.css # Global styles
+├── components/ # React components
+│ ├── LottieAnimation/ # Lottie animation component
+│ ├── Navbar/ # Navigation bar
+│ └── TurnitinSubscription/ # Subscription modal
+├── lib/ # Library code
+│ ├── supabase.ts # Supabase client
+│ └── supabase-server.ts # Supabase server client
+├── modules/ # Business logic modules
+│ ├── api/ # API clients
+│ │ ├── main.ts # Main API functions
+│ │ └── turnitin.ts # Turnitin API functions
+│ ├── request.ts # Axios configuration
+│ └── utils.ts # Utility functions
+├── stores/ # MobX stores
+│ ├── main.ts # Main store
+│ └── turnitin.ts # Turnitin store
+├── styles/ # Global styles
+│ └── library.scss # SCSS mixins and variables
+├── scripts/ # Deployment scripts
+│ ├── deploy.sh # Deployment script
+│ └── setup-server.sh # Server setup script
+└── public/ # Static assets
+├── images/ # Images
+└── lotties/ # Lottie animation files
+\`\`\`
+
+## Deployment
+
+### Using GitLab CI/CD
+
+#### 1. Set up server
+
+Run the server setup script on your deployment server:
+
+\`\`\`bash
+bash scripts/setup-server.sh
+\`\`\`
+
+#### 2. Configure GitLab CI/CD Variables
+
+In your GitLab project, go to Settings > CI/CD > Variables and add:
+
+- \`SSH_PRIVATE_KEY\`: Your SSH private key for server access
+- \`DEPLOY_USER_PROD\`: Server username (e.g., \`ubuntu\`)
+- \`DEPLOY_HOST_PROD\`: Server hostname or IP
+- \`DEPLOY_PATH_PROD\`: Deployment path (e.g., \`/var/www/turnitin-checker\`)
+- \`APP_PORT_PROD\`: Application port (default: 3000)
+
+For staging environment, add corresponding \`\*\_STAGING\` variables.
+
+#### 3. Deploy
+
+Push your code to the \`main\` branch (production) or \`develop\` branch (staging):
+
+\`\`\`bash
+git push origin main
+\`\`\`
+
+The CI/CD pipeline will automatically build and deploy your application.
+
+### Manual Deployment
+
+\`\`\`bash
+
+# Build the application
+
+npm run build
+
+# Start with PM2
+
+pm2 start npm --name turnitin-checker -- start
+
+# Save PM2 configuration
+
+pm2 save
+
+# Setup PM2 startup
+
+pm2 startup
+\`\`\`
+
+## Available Scripts
+
+- \`npm run dev\` - Start development server
+- \`npm run build\` - Build for production
+- \`npm start\` - Start production server
+- \`npm run lint\` - Run ESLint
+
+## API Integration
+
+The application integrates with the Answer AI API for Turnitin functionality:
+
+- File upload
+- Text submission
+- Detection status polling
+- Task management
+- User plan information
+
+## Authentication Flow
+
+1. User clicks "Login" button
+2. Redirected to Supabase Google OAuth
+3. After authentication, redirected to \`/auth/callback\`
+4. Callback route exchanges code for session
+5. User redirected back to home page
+6. Session stored in cookies
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (\`git checkout -b feature/amazing-feature\`)
+3. Commit your changes (\`git commit -m 'Add amazing feature'\`)
+4. Push to the branch (\`git push origin feature/amazing-feature\`)
+5. Open a Pull Request
+
+## License
+
+This project is proprietary software. All rights reserved.
+
+## Support
+
+For support, please contact your system administrator or open an issue in the repository.
