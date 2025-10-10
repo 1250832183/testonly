@@ -50,8 +50,6 @@ const TurnitinCheckerPage = observer(() => {
     setChecksCount(store.turnitin || 0);
   }, [store.turnitin]);
 
-  // Start polling tasks when logged in
-
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     if (newText.length <= MAX_CHARS) {
