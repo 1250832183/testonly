@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { observer } from "mobx-react";
 import { store } from "@/stores/main";
+import { turnitinStore } from "@/stores/turnitin";
 import { Avatar, Dropdown, Button } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -15,6 +16,17 @@ const Navbar: React.FC = observer(() => {
   const router = useRouter();
   const supabase = createClient();
   const [user, setUser] = useState<any>(null);
+
+  // Start polling tasks when logged in
+  useEffect(() => {
+    if (store.isLogin) {
+      turnitinStore.startTasksPolling();
+      store.updatePlan();
+    }
+    return () => {
+      turnitinStore.stopTasksPolling();
+    };
+  }, [store.isLogin]);
 
   useEffect(() => {
     // Check current user
@@ -79,14 +91,21 @@ const Navbar: React.FC = observer(() => {
           >
             Upload
           </button>
-          <button
-            className={`${styles.tab} ${
-              pathname === "/my-tasks" ? styles.active : ""
-            }`}
-            onClick={() => router.push("/my-tasks")}
-          >
-            My Tasks
-          </button>
+          <div className={styles.tabWrapper}>
+            <button
+              className={`${styles.tab} ${
+                pathname === "/my-tasks" ? styles.active : ""
+              }`}
+              onClick={() => router.push("/my-tasks")}
+            >
+              My Tasks
+            </button>
+            {turnitinStore.unreadTasksCountForBadge > 0 && (
+              <span className={styles.badge}>
+                {/* {turnitinStore.unreadTasksCountForBadge} */}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className={styles.auth}>

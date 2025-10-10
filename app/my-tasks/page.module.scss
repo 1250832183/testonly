@@ -69,7 +69,7 @@
     position: relative;
     background: white;
     border-radius: 20px;
-    padding: 28px;
+    padding: 28px 28px 20px;
     min-height: 240px;
     display: flex;
     flex-direction: column;
@@ -83,14 +83,14 @@
     }
 
     &:hover {
-      transform: translateY(-4px);
+      // transform: translateY(-4px);
       box-shadow: 0 8px 30px rgba(30, 58, 138, 0.15);
     }
 
     .aiWatermark {
       position: absolute;
-      bottom: 20px;
-      right: 20px;
+      bottom: 0px;
+      right: 0px;
       z-index: 0;
       opacity: 0.1;
 
@@ -261,4 +261,3 @@
     }
   }
 }
-

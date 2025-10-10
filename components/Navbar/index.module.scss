@@ -31,6 +31,11 @@
     flex: 1;
     justify-content: center;
 
+    .tabWrapper {
+      position: relative;
+      display: inline-block;
+    }
+
     .tab {
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid transparent;
@@ -51,6 +56,41 @@
         background: white;
         color: #1e3a8a;
         border-color: white;
+      }
+    }
+
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 13px;
+      height: 13px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background: #ef4444;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+      z-index: 1;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.9;
+        transform: scale(1.05);
       }
     }
   }
@@ -99,6 +139,15 @@
         padding: 8px 20px;
         font-size: 14px;
       }
+
+      .badge {
+        top: -4px;
+        right: -4px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        font-size: 11px;
+      }
     }
 
     .auth {
@@ -115,4 +164,3 @@
     }
   }
 }
-

@@ -51,15 +51,6 @@ const TurnitinCheckerPage = observer(() => {
   }, [store.turnitin]);
 
   // Start polling tasks when logged in
-  useEffect(() => {
-    if (store.isLogin) {
-      turnitinStore.startTasksPolling();
-      store.updatePlan();
-    }
-    return () => {
-      turnitinStore.stopTasksPolling();
-    };
-  }, [store.isLogin]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
@@ -121,6 +112,8 @@ const TurnitinCheckerPage = observer(() => {
   );
 
   const handleDetect = useCallback(async () => {
+    console.log("handleDetect", store.isLogin, store.turnitin);
+    
     if (!store.isLogin) {
       message.error("Please login first");
       return;
@@ -167,6 +160,8 @@ const TurnitinCheckerPage = observer(() => {
       if (submitResult.code === 200) {
         const { tId } = submitResult.data;
         setCurrentTId(tId);
+        // 设置当前正在处理的任务ID
+        turnitinStore.setCurrentProcessingTaskId(tId);
 
         const result = await pollTurnitinResult(tId, (status, aiWriting) => {
           console.log("Detection progress:", { status, aiWriting });
@@ -206,6 +201,8 @@ const TurnitinCheckerPage = observer(() => {
     setIsUploading(false);
     setDetectionStatus("idle");
     setCurrentTId(null);
+    // 清除当前正在处理的任务ID
+    turnitinStore.setCurrentProcessingTaskId(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -391,11 +388,21 @@ const TurnitinCheckerPage = observer(() => {
                   isUploadEnabled && !isUploading ? handleFileUpload : undefined
                 }
               >
-                <img
-                  src="/images/turnitin/Upload.png"
+                <svg
                   className={styles.uploadIcon}
-                  alt="Upload"
-                />
+                  width="20"
+                  height="20"
+                  viewBox="0 0 80 80"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M40 15V50" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+                  <path d="M27 28L40 15L53 28" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M20 55H60" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+                  <path d="M15 65H65" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round"/>
+                  <path d="M25 55V65" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+                  <path d="M55 55V65" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+                </svg>
                 {uploadStatus === "completed" ? "Replace file" : "Upload file"}
               </div>
 

@@ -1,0 +1,16 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Upload arrow -->
+  <path d="M40 15V50" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Arrow head -->
+  <path d="M27 28L40 15L53 28" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Base platform -->
+  <path d="M20 55H60" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Base lines -->
+  <path d="M15 65H65" stroke="#3b82f6" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M25 55V65" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+  <path d="M55 55V65" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+</svg>
+

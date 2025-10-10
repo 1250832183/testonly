@@ -106,7 +106,7 @@ const MyTasksPage = observer(() => {
       >
         {detecting && (
           <div className={styles.aiWatermark}>
-            <div className={styles.aiIcon}>🤖</div>
+            <img className={styles.aiIcon} src="/images/turnitin/ai.svg" alt="AI" />
           </div>
         )}
 

@@ -20,7 +20,7 @@ export const uploadFile = async (file: File) => {
 
     // Step 2: Upload file
     const fd = new FormData();
-    for (let k in formData) {
+    for (const k in formData) {
       fd.append(k, formData[k]);
     }
     fd.append(fileField, file);
@@ -34,11 +34,11 @@ export const uploadFile = async (file: File) => {
       success: true,
       accessUrl,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Upload error:", error);
     return {
       success: false,
-      message: error.message || "Upload failed",
+      message: error instanceof Error ? error.message : "Upload failed",
     };
   }
 };

@@ -1,0 +1,23 @@
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# Misc
+*.log
+.DS_Store
+coverage/
+.turbo/
+
+# Type definitions
+next-env.d.ts
+

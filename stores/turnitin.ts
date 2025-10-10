@@ -22,6 +22,7 @@ class TurnitinStore {
   tasks: Task[] = [];
   tasksLoading = false;
   tasksPollingInterval: NodeJS.Timeout | null = null;
+  currentProcessingTaskId: number | null = null; // 当前上传页面正在处理的任务ID
 
   constructor() {
     makeAutoObservable(this);
@@ -42,6 +43,24 @@ class TurnitinStore {
       return 0;
     }
     return this.tasks.filter((task) => task.status === 2 && !task.read).length;
+  }
+
+  // Get unread tasks count (excluding current processing task)
+  get unreadTasksCountForBadge() {
+    if (!Array.isArray(this.tasks)) {
+      return 0;
+    }
+    return this.tasks.filter(
+      (task) =>
+        task.status === 2 &&
+        !task.read &&
+        task.TurnitinId !== this.currentProcessingTaskId
+    ).length;
+  }
+
+  // Set current processing task ID
+  setCurrentProcessingTaskId(tId: number | null) {
+    this.currentProcessingTaskId = tId;
   }
 
   // Mark tasks as read
@@ -120,6 +139,7 @@ class TurnitinStore {
   reset() {
     this.tasks = [];
     this.tasksLoading = false;
+    this.currentProcessingTaskId = null;
     this.stopTasksPolling();
   }
 }
