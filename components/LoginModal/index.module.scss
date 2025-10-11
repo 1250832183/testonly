@@ -1,0 +1,338 @@
+.loginModal {
+  :global(.ant-modal-content) {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .modalContent {
+    padding: 40px 32px 32px;
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+
+      .title {
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        color: #1e3a8a;
+      }
+
+      .subtitle {
+        font-size: 15px;
+        color: #64748b;
+        margin: 0;
+        font-family: 'Rethink Sans', sans-serif;
+      }
+    }
+
+    .loginOptions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .googleButton,
+      .emailButton {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 14px 24px;
+        border-radius: 12px;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+
+        .icon {
+          font-size: 20px;
+        }
+      }
+
+      .googleButton {
+        background: white;
+        border: 2px solid #e2e8f0;
+        color: #1e293b;
+
+        .icon {
+          color: #ea4335;
+        }
+
+        &:hover:not(:disabled) {
+          border-color: #cbd5e1;
+          background: #f8fafc;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      .emailButton {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+
+        .icon {
+          color: white;
+        }
+
+        &:hover {
+          background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+
+        &::before,
+        &::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: #e2e8f0;
+        }
+
+        span {
+          padding: 0 16px;
+          color: #94a3b8;
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .emailForm {
+      .inputGroup {
+        margin-bottom: 20px;
+
+        .label {
+          display: block;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          color: #1e293b;
+          margin-bottom: 8px;
+        }
+
+        :global(.ant-input),
+        :global(.ant-input-password) {
+          border-radius: 8px;
+          border: 2px solid #e2e8f0;
+          font-size: 15px;
+
+          &:hover {
+            border-color: #cbd5e1;
+          }
+
+          &:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+          }
+        }
+
+        .inputIcon {
+          color: #94a3b8;
+        }
+      }
+
+      .magicLinkInfo {
+        margin-bottom: 20px;
+        padding: 12px 16px;
+        background: #eff6ff;
+        border-radius: 8px;
+        border-left: 3px solid #3b82f6;
+
+        p {
+          margin: 0;
+          font-size: 13px;
+          color: #1e40af;
+          line-height: 1.5;
+          font-family: 'Rethink Sans', sans-serif;
+        }
+      }
+
+      .submitButton {
+        height: 48px;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border: none;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+          box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+
+      .successView {
+        text-align: center;
+        padding: 20px 0;
+
+        .successIcon {
+          margin-bottom: 24px;
+          display: flex;
+          justify-content: center;
+
+          svg {
+            animation: scaleIn 0.5s ease;
+          }
+        }
+
+        @keyframes scaleIn {
+          0% {
+            transform: scale(0);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        .successTitle {
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 22px;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin: 0 0 12px 0;
+        }
+
+        .successMessage {
+          font-size: 15px;
+          color: #475569;
+          margin: 0 0 12px 0;
+          line-height: 1.6;
+
+          strong {
+            color: #3b82f6;
+            font-weight: 600;
+          }
+        }
+
+        .successHint {
+          font-size: 13px;
+          color: #64748b;
+          margin: 0 0 24px 0;
+          line-height: 1.6;
+        }
+
+        .resendButton {
+          width: 100%;
+          background: white;
+          border: 2px solid #3b82f6;
+          border-radius: 8px;
+          padding: 12px 16px;
+          color: #3b82f6;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-bottom: 12px;
+
+          &:hover:not(:disabled) {
+            background: #eff6ff;
+            transform: translateY(-2px);
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .backButton {
+        width: 100%;
+        background: none;
+        border: none;
+        color: #64748b;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 8px;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #3b82f6;
+        }
+      }
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+
+      .terms {
+        font-size: 12px;
+        color: #94a3b8;
+        margin: 0;
+        line-height: 1.6;
+
+        a {
+          color: #3b82f6;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .loginModal {
+    :global(.ant-modal) {
+      max-width: 90vw;
+    }
+
+    .modalContent {
+      padding: 32px 24px 24px;
+
+      .header {
+        margin-bottom: 24px;
+
+        .title {
+          font-size: 24px;
+        }
+
+        .subtitle {
+          font-size: 14px;
+        }
+      }
+
+      .loginOptions {
+        .googleButton,
+        .emailButton {
+          font-size: 15px;
+          padding: 12px 20px;
+        }
+      }
+    }
+  }
+}
+

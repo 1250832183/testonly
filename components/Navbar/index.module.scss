@@ -15,10 +15,16 @@
     justify-content: space-between;
   }
 
+  .leftSection {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
   .logo {
     h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 21px;
       font-weight: 700;
       color: white;
       letter-spacing: -0.5px;
@@ -27,9 +33,8 @@
 
   .tabs {
     display: flex;
-    gap: 8px;
-    flex: 1;
-    justify-content: center;
+    gap: 4px;
+    align-items: center;
 
     .tabWrapper {
       position: relative;
@@ -37,25 +42,48 @@
     }
 
     .tab {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid transparent;
-      border-radius: 8px;
-      padding: 10px 32px;
-      font-size: 16px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.8);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 8px 20px;
+      font-size: 17px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      position: relative;
+
+      // 下划线动画效果
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background: white;
+        transition: width 0.3s ease;
+      }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        // background: rgba(255, 255, 255, 0.1);
         color: white;
+
+        &::after {
+          width: 90%;
+        }
       }
 
       &.active {
-        background: white;
-        color: #1e3a8a;
-        border-color: white;
+        background: transparent;
+        color: white;
+        font-weight: 600;
+
+        &::after {
+          width: 90%;
+          background: white;
+        }
       }
     }
 
@@ -66,9 +94,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 13px;
-      height: 13px;
-      padding: 0 6px;
+      width: 10px;
+      height: 10px;
       border-radius: 10px;
       background: #ef4444;
       color: white;
@@ -99,10 +126,42 @@
     .avatar {
       cursor: pointer;
       border: 2px solid white;
-      transition: transform 0.2s ease;
+      transition: all 0.3s ease;
 
       &:hover {
         transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    .avatarWithInitial {
+      cursor: pointer;
+      border: 2px solid white;
+      transition: all 0.3s ease;
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+      }
+    }
+
+    .userInfo {
+      padding: 4px 0;
+
+      .userEmail {
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 14px;
+        color: #1e293b;
+        font-weight: 500;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 
@@ -130,30 +189,43 @@
       padding: 0 20px;
     }
 
+    .leftSection {
+      gap: 16px;
+      flex: 1;
+    }
+
     .logo h1 {
       font-size: 18px;
     }
 
     .tabs {
+      gap: 2px;
+
       .tab {
-        padding: 8px 20px;
-        font-size: 14px;
+        padding: 6px 12px;
+        font-size: 13px;
       }
 
       .badge {
-        top: -4px;
-        right: -4px;
-        min-width: 18px;
-        height: 18px;
         padding: 0 5px;
         font-size: 11px;
       }
     }
 
     .auth {
-      .avatar {
-        width: 32px;
-        height: 32px;
+
+      .avatar,
+      .avatarWithInitial {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 16px;
+      }
+
+      .userInfo {
+        .userEmail {
+          font-size: 13px;
+          max-width: 150px;
+        }
       }
 
       .loginButton {
