@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { PostHogProvider } from "@/components/PostHogProvider";
+import { PostHogPageView } from "@/components/PostHogPageView";
+import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +23,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <main style={{ minHeight: "calc(100vh - 72px)" }}>{children}</main>
+        <PostHogProvider>
+          <AnalyticsProvider>
+            <Suspense fallback={null}>
+              <PostHogPageView />
+            </Suspense>
+            <Navbar />
+            <main style={{ minHeight: "calc(100vh - 72px)" }}>{children}</main>
+          </AnalyticsProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

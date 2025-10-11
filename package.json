@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@microsoft/clarity": "^1.0.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.10",
     "antd": "^5.22.5",
@@ -21,6 +22,7 @@
     "mobx": "^6.13.5",
     "mobx-react": "^9.1.1",
     "next": "^15.1.5",
+    "posthog-js": "^1.275.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-svg": "^16.1.34",

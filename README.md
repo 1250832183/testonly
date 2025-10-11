@@ -22,6 +22,7 @@ A modern web application for checking document similarity using official Turniti
 - **HTTP Client**: Axios
 - **UI Components**: Ant Design
 - **Animations**: Lottie Web
+- **Analytics**: PostHog + Microsoft Clarity
 - **Deployment**: GitLab CI/CD + PM2
 
 ## Prerequisites
@@ -61,7 +62,18 @@ NEXT_PUBLIC_API_BASE_URL=https://api.answer-ai.com/api/v1
 
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# PostHog Analytics (Optional)
+
+NEXT_PUBLIC_POSTHOG_KEY=your_posthog_project_key
+NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
+
+# Microsoft Clarity (Optional)
+
+NEXT_PUBLIC_CLARITY_PROJECT_ID=your_clarity_project_id
 \`\`\`
+
+> For detailed PostHog setup instructions, see [POSTHOG_SETUP.md](./POSTHOG_SETUP.md)
 
 ### 4. Run the development server
 
@@ -106,8 +118,12 @@ turnitin-checker/
 │ ├── page.tsx # Home page (Upload)
 │ └── globals.css # Global styles
 ├── components/ # React components
+│ ├── AnalyticsProvider/ # Analytics initialization
 │ ├── LottieAnimation/ # Lottie animation component
+│ ├── LoginModal/ # Login modal component
 │ ├── Navbar/ # Navigation bar
+│ ├── PostHogProvider/ # PostHog analytics provider
+│ ├── PostHogPageView/ # Page view tracking
 │ └── TurnitinSubscription/ # Subscription modal
 ├── lib/ # Library code
 │ ├── supabase.ts # Supabase client
