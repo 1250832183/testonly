@@ -3,18 +3,25 @@ stages:
   - deploy
 
 variables:
-  NODE_VERSION: "18.18.0"
+  NODE_VERSION: "20.18.0"
+  VERCEL_ORG_ID: $VERCEL_ORG_ID
+  VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
 
-# Build Job
+# Build and Test Job
 build:
   stage: build
   image: node:${NODE_VERSION}
   cache:
+    key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
+      - .pnpm-store/
+  before_script:
+    - npm install -g pnpm@9.15.0
+    - pnpm config set store-dir .pnpm-store
   script:
-    - npm ci
-    - npm run build
+    - pnpm install --frozen-lockfile
+    - pnpm run build
   artifacts:
     paths:
       - .next/
@@ -22,45 +29,41 @@ build:
       - public/
     expire_in: 1 hour
   only:
-    - main
-    - develop
+    - master
+    - test
 
-# Deploy to Production
+# Deploy to Vercel Production
 deploy_production:
   stage: deploy
-  image: ubuntu:22.04
+  image: node:${NODE_VERSION}
+  dependencies:
+    - build
   before_script:
-    - apt-get update -qq && apt-get install -y -qq openssh-client rsync
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts
+    - npm install -g vercel@latest
   script:
-    - chmod +x ./scripts/deploy.sh
-    - ./scripts/deploy.sh production
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
   environment:
     name: production
-    url: https://turnitin.yourdomain.com
+    url: https://your-project.vercel.app
   only:
-    - main
+    - master
 
-# Deploy to Staging
-deploy_staging:
+# Deploy to Vercel Preview (Test)
+deploy_preview:
   stage: deploy
-  image: ubuntu:22.04
+  image: node:${NODE_VERSION}
+  dependencies:
+    - build
   before_script:
-    - apt-get update -qq && apt-get install -y -qq openssh-client rsync
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan -H $DEPLOY_HOST_STAGING >> ~/.ssh/known_hosts
+    - npm install -g vercel@latest
   script:
-    - chmod +x ./scripts/deploy.sh
-    - ./scripts/deploy.sh staging
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
   environment:
-    name: staging
-    url: https://staging-turnitin.yourdomain.com
+    name: preview
+    url: https://your-project-preview.vercel.app
   only:
-    - develop
+    - test

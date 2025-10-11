@@ -23,13 +23,14 @@ A modern web application for checking document similarity using official Turniti
 - **UI Components**: Ant Design
 - **Animations**: Lottie Web
 - **Analytics**: PostHog + Microsoft Clarity
-- **Deployment**: GitLab CI/CD + PM2
+- **Deployment**: GitLab CI/CD + Vercel
 
 ## Prerequisites
 
-- Node.js 18.18.0 or higher
-- npm or yarn
+- Node.js 18.18.0 or higher (20.x recommended)
+- pnpm (package manager)
 - Supabase account
+- Vercel account
 - GitLab account (for CI/CD)
 
 ## Getting Started
@@ -44,7 +45,11 @@ cd turnitin-checker
 ### 2. Install dependencies
 
 \`\`\`bash
-npm install
+# Install pnpm globally if not installed
+npm install -g pnpm
+
+# Install project dependencies
+pnpm install
 \`\`\`
 
 ### 3. Set up environment variables
@@ -78,7 +83,7 @@ NEXT_PUBLIC_CLARITY_PROJECT_ID=your_clarity_project_id
 ### 4. Run the development server
 
 \`\`\`bash
-npm run dev
+pnpm run dev
 \`\`\`
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
@@ -149,65 +154,79 @@ turnitin-checker/
 
 ## Deployment
 
-### Using GitLab CI/CD
+### Deployment Architecture
 
-#### 1. Set up server
+```
+GitLab Repository → GitLab CI/CD → Vercel Platform
+```
 
-Run the server setup script on your deployment server:
+The project uses GitLab CI/CD to build and automatically deploy to Vercel.
 
-\`\`\`bash
-bash scripts/setup-server.sh
-\`\`\`
+### Setup Vercel Deployment
+
+#### 1. Create Vercel Account and Project
+
+1. Sign up at [Vercel](https://vercel.com/)
+2. Create a new project or use existing one
+3. Get your Vercel credentials:
+   - Vercel Token (from [Settings → Tokens](https://vercel.com/account/tokens))
+   - Project ID (from Project Settings)
+   - Org/Team ID (from Project Settings)
 
 #### 2. Configure GitLab CI/CD Variables
 
 In your GitLab project, go to Settings > CI/CD > Variables and add:
 
-- \`SSH_PRIVATE_KEY\`: Your SSH private key for server access
-- \`DEPLOY_USER_PROD\`: Server username (e.g., \`ubuntu\`)
-- \`DEPLOY_HOST_PROD\`: Server hostname or IP
-- \`DEPLOY_PATH_PROD\`: Deployment path (e.g., \`/var/www/turnitin-checker\`)
-- \`APP_PORT_PROD\`: Application port (default: 3000)
+- `VERCEL_TOKEN`: Your Vercel authentication token (Protected, Masked)
+- `VERCEL_PROJECT_ID`: Your Vercel project ID (Protected)
+- `VERCEL_ORG_ID`: Your Vercel organization/team ID (Protected)
 
-For staging environment, add corresponding \`\*\_STAGING\` variables.
+#### 3. Configure Environment Variables in Vercel
 
-#### 3. Deploy
+In Vercel Dashboard → Settings → Environment Variables, add all required env vars for both Production and Preview environments.
 
-Push your code to the \`main\` branch (production) or \`develop\` branch (staging):
+#### 4. Deploy
 
+**Deploy to Preview (Test):**
 \`\`\`bash
-git push origin main
+git push origin test
 \`\`\`
 
-The CI/CD pipeline will automatically build and deploy your application.
+**Deploy to Production:**
+\`\`\`bash
+git push origin master
+\`\`\`
 
-### Manual Deployment
+The GitLab CI/CD pipeline will automatically build and deploy to Vercel.
+
+### Manual Deployment (Local)
 
 \`\`\`bash
+# Install Vercel CLI
+npm install -g vercel
 
-# Build the application
+# Login to Vercel
+vercel login
 
-npm run build
+# Deploy to Preview
+vercel
 
-# Start with PM2
-
-pm2 start npm --name turnitin-checker -- start
-
-# Save PM2 configuration
-
-pm2 save
-
-# Setup PM2 startup
-
-pm2 startup
+# Deploy to Production
+vercel --prod
 \`\`\`
+
+### Deployment Documentation
+
+For detailed deployment instructions, see:
+- [Vercel Deployment Guide](./VERCEL_DEPLOYMENT.md)
+- [Deployment Checklist](./DEPLOYMENT_CHECKLIST.md)
 
 ## Available Scripts
 
-- \`npm run dev\` - Start development server
-- \`npm run build\` - Build for production
-- \`npm start\` - Start production server
-- \`npm run lint\` - Run ESLint
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm start` - Start production server locally
+- `pnpm run lint` - Run ESLint
 
 ## API Integration
 
@@ -222,11 +241,13 @@ The application integrates with the Answer AI API for Turnitin functionality:
 ## Authentication Flow
 
 1. User clicks "Login" button
-2. Redirected to Supabase Google OAuth
-3. After authentication, redirected to \`/auth/callback\`
-4. Callback route exchanges code for session
-5. User redirected back to home page
-6. Session stored in cookies
+2. Choose login method (Google OAuth or Magic Link)
+3. Redirected to Supabase authentication
+4. After authentication, redirected to `/auth/callback`
+5. Callback route exchanges code for session
+6. User redirected back to home page
+7. Session stored securely in cookies
+8. PostHog identifies user for analytics
 
 ## Contributing
 
