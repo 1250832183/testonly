@@ -1,4 +1,4 @@
-@import '@/styles/library.scss';
+@use '@/styles/library.scss';
 
 .turnitinChecker {
   min-height: calc(100vh - 72px);
@@ -121,7 +121,7 @@
         font-weight: 400;
         line-height: 1.6;
         resize: none;
-        @include scrollBar();
+        @include library.scrollBar();
 
         &::placeholder {
           color: #94a3b8;
@@ -508,4 +508,3 @@
     }
   }
 }
-

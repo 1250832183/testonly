@@ -60,6 +60,8 @@ cat .vercel/project.json
 
 在 Vercel 项目设置中（Settings → Environment Variables），添加以下环境变量：
 
+> **详细配置说明:** 参见 [环境变量管理指南](./ENV_MANAGEMENT.md)
+
 **Production 环境:**
 ```
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -69,11 +71,20 @@ NEXT_PUBLIC_API_BASE_URL=https://api.answer-ai.com/api/v1
 NEXT_PUBLIC_POSTHOG_KEY=your_posthog_key
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
 NEXT_PUBLIC_CLARITY_PROJECT_ID=your_clarity_id
+NEXT_PUBLIC_ENVIRONMENT=production
 ```
 
 **Preview 环境:**
 ```
-# 同 Production，或使用不同的测试环境配置
+# 使用不同的测试环境配置（推荐）
+NEXT_PUBLIC_SUPABASE_URL=your_preview_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_preview_anon_key
+NEXT_PUBLIC_PREFIX=https://api-test.answer-ai.com
+NEXT_PUBLIC_API_BASE_URL=https://api-test.answer-ai.com/api/v1
+NEXT_PUBLIC_POSTHOG_KEY=your_preview_posthog_key
+NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
+NEXT_PUBLIC_CLARITY_PROJECT_ID=your_preview_clarity_id
+NEXT_PUBLIC_ENVIRONMENT=preview
 ```
 
 ## 部署流程
@@ -450,12 +461,13 @@ git push origin test                    # 触发 Preview 部署
 
 ## 相关文档
 
+- [环境变量管理指南](./ENV_MANAGEMENT.md) - Preview 和 Production 环境配置
+- [部署检查清单](./DEPLOYMENT_CHECKLIST.md) - 部署前检查事项
+- [项目 README](./README.md) - 项目总览
 - [Vercel 文档](https://vercel.com/docs)
 - [Vercel CLI 文档](https://vercel.com/docs/cli)
 - [Next.js 部署文档](https://nextjs.org/docs/deployment)
 - [GitLab CI/CD 文档](https://docs.gitlab.com/ee/ci/)
-- [项目 README](./README.md)
-- [部署检查清单](./DEPLOYMENT_CHECKLIST.md)
 
 ## 支持
 

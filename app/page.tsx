@@ -45,6 +45,8 @@ const TurnitinCheckerPage = observer(() => {
   const MAX_CHARS = 30000;
   const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
+  console.log("ENV", process.env.NEXT_PUBLIC_ENV);
+
   // Monitor store turnitin count changes
   useEffect(() => {
     setChecksCount(store.turnitin || 0);

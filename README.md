@@ -78,9 +78,19 @@ NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
 NEXT_PUBLIC_CLARITY_PROJECT_ID=your_clarity_project_id
 \`\`\`
 
-> For detailed PostHog setup instructions, see [POSTHOG_SETUP.md](./POSTHOG_SETUP.md)
+> **环境变量管理:**
+> - [环境变量管理指南](./ENV_MANAGEMENT.md) - Preview 和 Production 环境配置
+> - [PostHog 设置指南](./POSTHOG_SETUP.md) - 分析工具配置
 
-### 4. Run the development server
+### 4. Verify environment variables (optional)
+
+\`\`\`bash
+pnpm run verify-env
+\`\`\`
+
+This will check if all required environment variables are set correctly.
+
+### 5. Run the development server
 
 \`\`\`bash
 pnpm run dev
@@ -227,6 +237,7 @@ For detailed deployment instructions, see:
 - `pnpm run build` - Build for production
 - `pnpm start` - Start production server locally
 - `pnpm run lint` - Run ESLint
+- `pnpm run verify-env` - Verify environment variables
 
 ## API Integration
 
