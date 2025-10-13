@@ -151,19 +151,30 @@ vercel --prod
 
 ### Deploy Stage
 
-#### Production 部署
+#### Production 部署（master 分支）
 ```yaml
 - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+# 环境变量文件处理
+- mv .env.production .env  # 将生产环境变量重命名为 .env
+- rm .env.local            # 删除本地开发环境变量
 - vercel build --prod --token=$VERCEL_TOKEN
 - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
 ```
 
-#### Preview 部署
+#### Preview 部署（test 分支）
 ```yaml
 - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+# 环境变量文件处理
+- mv .env.preview .env     # 将预览环境变量重命名为 .env
+- rm .env.local            # 删除本地开发环境变量
 - vercel build --token=$VERCEL_TOKEN
 - vercel deploy --prebuilt --token=$VERCEL_TOKEN
 ```
+
+**环境变量文件优先级：**
+1. Vercel 环境变量（通过 Dashboard 配置）- 最高优先级
+2. `.env` 文件（从 `.env.production` 或 `.env.preview` 重命名而来）
+3. `.env.local` 文件（已删除，防止冲突）
 
 ## Vercel 项目配置
 

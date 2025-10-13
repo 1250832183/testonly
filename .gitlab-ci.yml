@@ -8,6 +8,17 @@ deploy_preview:
   script:
     - npm install --global vercel pnpm
     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+    # 处理环境变量文件
+    - |
+      if [ -f .env.local ]; then
+        mv .env.local .env
+        echo "✅ Renamed .env.local to .env"
+      fi
+    - |
+      if [ -f .env.production ]; then
+        rm .env.production
+        echo "✅ Removed .env.production"
+      fi
     - vercel build --token=$VERCEL_TOKEN
     - |
       DEPLOY_URL=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN" --meta gitCommitSha="$CI_COMMIT_SHA" --meta gitBranch="$CI_COMMIT_REF_NAME" --meta gitCommitMessage="$CI_COMMIT_MESSAGE" --confirm)
@@ -23,5 +34,16 @@ deploy_production:
   script:
     - npm install --global vercel pnpm
     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    # 处理环境变量文件
+    - |
+      if [ -f .env.production ]; then
+        mv .env.production .env
+        echo "✅ Renamed .env.production to .env"
+      fi
+    - |
+      if [ -f .env.local ]; then
+        rm .env.local
+        echo "✅ Removed .env.local"
+      fi
     - vercel build --prod --token=$VERCEL_TOKEN
     - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN --meta gitCommitSha=$CI_COMMIT_SHA --meta gitBranch=$CI_COMMIT_REF_NAME --meta gitCommitMessage="$CI_COMMIT_MESSAGE"
