@@ -87,6 +87,85 @@
         }
       }
     }
+
+    .stats {
+      display: flex;
+      align-items: flex-start;
+      gap: 36px;
+      margin-top: 28px;
+
+      @media (max-width: 768px) {
+        justify-content: center;
+        gap: 24px;
+      }
+
+      .statItem {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .statValue {
+          color: #2563eb;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 1.1;
+        }
+
+        .statLabel {
+          color: #64748b;
+          font-family: 'Rethink Sans', sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .heroButtons {
+      display: flex;
+      gap: 14px;
+      margin-top: 28px;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+      }
+
+      .primaryButton {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        color: #fff;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+      }
+
+      .secondaryButton {
+        background: #fff;
+        border: 2px solid #3b82f6;
+        border-radius: 12px;
+        padding: 12px 24px;
+        color: #3b82f6;
+        font-family: 'Rethink Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #eff6ff;
+          transform: translateY(-2px);
+        }
+      }
+    }
   }
 
   .rightSection {

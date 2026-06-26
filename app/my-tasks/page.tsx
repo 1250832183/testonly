@@ -9,6 +9,8 @@ import { observer } from "mobx-react";
 import { store } from "@/stores/main";
 import { turnitinStore } from "@/stores/turnitin";
 import LottieAnimation from "@/components/LottieAnimation";
+import InviteBanner from "@/components/InviteBanner";
+import InviteModal from "@/components/InviteModal";
 import styles from "./page.module.scss";
 import clsx from "classnames";
 import { message } from "antd";
@@ -29,6 +31,8 @@ export interface Task {
 const MyTasksPage = observer(() => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [showInviteBanner, setShowInviteBanner] = useState(true);
+  const [showInviteModal, setShowInviteModal] = useState(false);
 
   // Format timestamp to MM/DD/YYYY
   const formatDate = (timestamp: number): string => {
@@ -168,8 +172,22 @@ const MyTasksPage = observer(() => {
 
   return (
     <div className={styles.myTasksPage}>
+      {showInviteBanner && (
+        <div className={styles.bannerWrap}>
+          <InviteBanner
+            earned={3}
+            limit={10}
+            onInvite={() => setShowInviteModal(true)}
+            onClose={() => setShowInviteBanner(false)}
+          />
+        </div>
+      )}
+
       <div className={styles.header}>
         <h1 className={styles.title}>My Tasks</h1>
+        <p className={styles.subtitle}>
+          Your results are all here — ready to view or download.
+        </p>
       </div>
 
       <div className={styles.tasksGrid}>
@@ -182,6 +200,14 @@ const MyTasksPage = observer(() => {
           turnitinStore.tasks.map(renderTaskCard)
         )}
       </div>
+
+      {/* Invite Friends Modal */}
+      <InviteModal
+        isShow={showInviteModal}
+        onClose={() => setShowInviteModal(false)}
+        earned={3}
+        limit={10}
+      />
     </div>
   );
 });

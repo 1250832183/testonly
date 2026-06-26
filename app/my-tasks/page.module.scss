@@ -19,6 +19,11 @@
     }
   }
 
+  .bannerWrap {
+    max-width: 1400px;
+    margin: 0 auto 32px;
+  }
+
   .header {
     max-width: 1400px;
     margin: 0 auto 40px;
@@ -33,6 +38,14 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    .subtitle {
+      color: #3b82f6;
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      margin: 10px 0 0;
     }
   }
 

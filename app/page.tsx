@@ -11,6 +11,8 @@ import { turnitinStore } from "@/stores/turnitin";
 import { message } from "antd";
 import LottieAnimation from "@/components/LottieAnimation";
 import TurnitinSubscription from "@/components/TurnitinSubscription";
+import InviteCard from "@/components/InviteCard";
+import InviteModal from "@/components/InviteModal";
 import { uploadFile } from "@/modules/api/main";
 import {
   submitTurnitinDetection,
@@ -39,6 +41,7 @@ const TurnitinCheckerPage = observer(() => {
   const [turnitinSubscriptionLoading, setTurnitinSubscriptionLoading] =
     useState(false);
   const [currentTId, setCurrentTId] = useState<number | null>(null);
+  const [showInviteModal, setShowInviteModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const MIN_CHARS = 300;
@@ -216,6 +219,14 @@ const TurnitinCheckerPage = observer(() => {
     setShowTurnitinSubscription(true);
   }, []);
 
+  const handleInviteAction = useCallback(() => {
+    if (!store.isLogin) {
+      message.info("Please login to invite friends");
+      return;
+    }
+    setShowInviteModal(true);
+  }, []);
+
   const handleSubscriptionClose = useCallback(() => {
     setShowTurnitinSubscription(false);
   }, []);
@@ -245,14 +256,41 @@ const TurnitinCheckerPage = observer(() => {
         <div className={styles.leftSection}>
           <h1 className={styles.title}>Turnitin Checker</h1>
           <p className={styles.description}>
-            Get your official Turnitin similarity report instantly, check before
-            submission, and ensure originality.
+            Get AI and similarity report insights before you submit, check
+            privately on TurnitChecker, and revise with confidence.
           </p>
           <ul className={styles.features}>
-            <li>Officially Authorized by Turnitin</li>
-            <li>Direct Connection to Turnitin Servers</li>
-            <li>No Storage, No Traces</li>
+            <li>Independent Report-Checking Service</li>
+            <li>Secure Document Processing</li>
+            <li>Private Checking Workflow</li>
           </ul>
+
+          <div className={styles.stats}>
+            <div className={styles.statItem}>
+              <span className={styles.statValue}>Private</span>
+              <span className={styles.statLabel}>Private checks</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statValue}>8 million</span>
+              <span className={styles.statLabel}>Users</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statValue}>320k</span>
+              <span className={styles.statLabel}>Educators</span>
+            </div>
+          </div>
+
+          <div className={styles.heroButtons}>
+            <button
+              className={styles.primaryButton}
+              onClick={() => setShowTurnitinSubscription(true)}
+            >
+              Try a Sample Check
+            </button>
+            <button className={styles.secondaryButton}>Join our group</button>
+          </div>
+
+          <InviteCard isLogin={store.isLogin} onAction={handleInviteAction} />
         </div>
 
         {/* Right Section - Interaction */}
@@ -434,6 +472,14 @@ const TurnitinCheckerPage = observer(() => {
         onClose={handleSubscriptionClose}
         onSubscribe={handleSubscriptionSubscribe}
         loading={turnitinSubscriptionLoading}
+      />
+
+      {/* Invite Friends Modal */}
+      <InviteModal
+        isShow={showInviteModal}
+        onClose={() => setShowInviteModal(false)}
+        earned={3}
+        limit={10}
       />
     </div>
   );

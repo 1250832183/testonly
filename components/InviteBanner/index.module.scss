@@ -1,0 +1,148 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.giftIcon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+}
+
+.copy {
+  flex: 1;
+}
+
+.title {
+  color: #1e3a8a;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 4px;
+}
+
+.description {
+  color: #475569;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  @media (max-width: 900px) {
+    justify-content: space-between;
+  }
+
+  @media (max-width: 520px) {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+.progressBlock {
+  min-width: 160px;
+
+  @media (max-width: 520px) {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+.progressLabel {
+  color: #64748b;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.progressValue {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.progressBar {
+  width: 100%;
+  height: 7px;
+  background: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  transition: width 0.4s ease;
+}
+
+.inviteButton {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 11px 24px;
+  color: #ffffff;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.closeButton {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #1e3a8a;
+    background: rgba(255, 255, 255, 0.6);
+  }
+}
